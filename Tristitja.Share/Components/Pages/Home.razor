@@ -1,0 +1,61 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<style>
+    li {
+        padding: .5rem;
+    }
+</style>
+
+<button class="btn btn-warning btn-large" @onclick="Logout">Wyloguj się</button>
+
+<ul>
+    <li>
+        <span>Small:</span>
+        <div>
+            <button class="btn btn-primary btn-small">Primary</button>
+            <button class="btn btn-info btn-small">Information</button>
+            <button class="btn btn-success btn-small">Success</button>
+            <button class="btn btn-warning btn-small">Warning</button>
+            <button class="btn btn-danger btn-small">Danger</button>
+            <button class="btn btn-small">Default</button>
+        </div>
+    </li>
+    <li>
+        <span>Default:</span>
+        <div>
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-info">Information</button>
+            <button class="btn btn-success">Success</button>
+            <button class="btn btn-warning">Warning</button>
+            <button class="btn btn-danger">Danger</button>
+            <button class="btn">Default</button>
+        </div>
+    </li>
+    <li>
+        <span>Large:</span>
+        <div>
+            <button class="btn btn-primary btn-large">Primary</button>
+            <button class="btn btn-info btn-large">Information</button>
+            <button class="btn btn-success btn-large">Success</button>
+            <button class="btn btn-warning btn-large">Warning</button>
+            <button class="btn btn-danger btn-large">Danger</button>
+            <button class="btn btn-large">Default</button>
+        </div>
+    </li>
+</ul>
+
+@code {
+
+    public async Task Logout(EventArgs args)
+    {
+        await JsRuntime.InvokeAsync<bool>("window.tristitja.logout", []);
+    }
+
+}

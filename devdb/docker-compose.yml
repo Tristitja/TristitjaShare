@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  # https://stackoverflow.com/a/73673569 
+  postgres-init:
+    image: postgres:16-alpine
+    volumes:
+      - "./data:/data"
+    entrypoint:
+      - sh
+      - -c
+      - |
+        chown -R $UID:$GID /data
+  postgres:
+    image: postgres:16-alpine
+    depends_on:
+      postgres-init:
+        condition: service_completed_successfully
+    
+    user: "$UID:$GID"
+    volumes:
+      - "./data:/pgdata"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "change_me_plz"
+      POSTGRES_DB: "tristitja_share"
+      PGDATA: "/pgdata"
+    restart: no 

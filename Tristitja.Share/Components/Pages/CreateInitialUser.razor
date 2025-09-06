@@ -1,0 +1,87 @@
+@page "/create-initial-user"
+
+@rendermode InteractiveServer
+@attribute [Authorize(Policy = AuthorizationConstants.InitialUserNotCreated)]
+@implements IDisposable
+
+@using System.Diagnostics
+@using Microsoft.AspNetCore.Authorization
+@using Tristitja.Auth.Local.Dto
+@using Tristitja.Auth.Local.Services
+@using Tristitja.Share.Authorization
+@using Tristitja.Share.Validation
+
+@inject IUserService UserService
+
+<div class="container">
+    
+    <EditForm EditContext="_editContext" OnValidSubmit="Submit" FormName="CreateInitialUser">
+        <FluentValidator/>
+        <div class="form-title">
+            <h2>Create Initial User</h2>
+        </div>
+
+        <div class="form-content">
+            <div class="inputs">
+                <label class="large">
+                    Username:
+                    <InputText class="large" @bind-Value="Model!.Username" required/>
+                </label>
+                <ValidationMessage For="() => Model.Username"/>
+                
+                <label class="large">
+                    Password:
+                    <InputText class="large" type="password" @bind-Value="Model.Password" required/>
+                </label>
+                <ValidationMessage For="() => Model.Password"/>
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary btn-large" disabled="@(!IsSubmittable)">Submit</button>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private EditContext? _editContext;
+    
+    [SupplyParameterFromForm]
+    public CreateInitialUserRequest? Model { get; set; }
+    
+    
+    protected override void OnInitialized()
+    {
+        Model ??= new CreateInitialUserRequest
+        {
+            Username = "",
+            Password = ""
+        };
+
+        _editContext = new EditContext(Model);
+        _editContext.OnFieldChanged += OnFieldModified;
+    }
+
+    private void Submit()
+    {
+        if (Model is null)
+        {
+            // Model should never be null xpp
+            throw new UnreachableException();
+        }
+        
+        UserService.CreateInitialUser(Model.Username, Model.Password);
+    }
+
+    protected void OnFieldModified(object? sender, FieldChangedEventArgs? args)
+    {
+        StateHasChanged();
+    }
+    
+    public bool IsSubmittable => !_editContext.GetValidationMessages().Any() && _editContext.IsModified();
+
+    public void Dispose()
+    {
+        _editContext.OnFieldChanged -= OnFieldModified;
+    }
+
+}

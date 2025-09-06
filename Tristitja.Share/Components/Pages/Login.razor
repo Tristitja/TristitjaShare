@@ -1,0 +1,98 @@
+@page "/Login"
+
+@rendermode InteractiveServer
+@attribute [Authorize(Policy = AuthorizationConstants.UserNotLoggedIn)]
+@implements IDisposable
+
+@using System.Diagnostics
+@using Microsoft.AspNetCore.Authorization
+@using Tristitja.Auth.Local.Dto
+@using Tristitja.Share.Authorization
+@using Tristitja.Share.Validation
+
+@inject IJSRuntime JsRuntime
+
+<div class="container">
+    <EditForm EditContext="_editContext" OnValidSubmit="Submit" FormName="Login">
+        <FluentValidator/>
+        <div class="form-title">
+            <h2>Login</h2>
+        </div>
+        
+        <ValidationSummary/>
+        
+        <div class="form-content">
+            
+            @if (_error is not null)
+            {
+                <div class="error">
+                    <span class="error-message">@_error</span>
+                </div>
+            }
+
+            <div class="inputs">
+                <label class="large">
+                    Username:
+                    <InputText class="large" @bind-Value="Model!.Username" required/>
+                </label>
+
+                <label class="large">
+                    Password:
+                    <InputText class="large" type="password" @bind-Value="Model.Password" required/>
+                </label>
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary btn-large" disabled="@(!IsSubmittable)">Submit</button>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private EditContext? _editContext;
+    
+    [SupplyParameterFromForm]
+    public LoginRequest? Model { get; set; }
+
+    private string? _error = null;
+    
+    protected override void OnInitialized()
+    {
+        Model ??= new LoginRequest
+        {
+            Username = "",
+            Password = ""
+        };
+
+        _editContext = new EditContext(Model);
+        _editContext.OnFieldChanged += OnFieldModified;
+    }
+
+    private async Task Submit()
+    {
+        if (Model is null)
+        {
+            // Model should never be null xpp
+            throw new UnreachableException();
+        }
+
+        var loginResult = await JsRuntime.InvokeAsync<bool>("window.tristitja.login", [Model.Username, Model.Password]);
+        
+        if (!loginResult)
+        {
+            _error = "Invalid username or password";
+        }
+    }
+
+    protected void OnFieldModified(object? sender, FieldChangedEventArgs? args)
+    {
+        StateHasChanged();
+    }
+    
+    public bool IsSubmittable => !_editContext!.GetValidationMessages().Any() && _editContext.IsModified();
+
+    public void Dispose()
+    {
+        _editContext!.OnFieldChanged -= OnFieldModified;
+    }
+}

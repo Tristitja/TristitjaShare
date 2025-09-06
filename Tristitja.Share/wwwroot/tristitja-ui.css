@@ -1,0 +1,157 @@
+:root {
+    --bg-color: #000000;
+    --fg-color: #eee;
+    
+    --btn-color: var(--fg-color);
+    --btn-hover-bg: var(--fg-color);
+    --btn-hover-color: var(--bg-color);
+    
+    --primary: #d7aaff;
+    --on-primary: #000;
+    
+    --information: #a3cffa; 
+    --success: #a8e4c0;
+    --warning: #ffdb99;
+    --danger: #ffadad;
+    
+    --disabled: #888;
+}
+
+.tristitja-ui {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    
+    font-family: 'Fira Code', monospace;
+    color: var(--fg-color);
+    background-color: var(--bg-color);
+}
+
+.tristitja-ui * {
+    font-family: 'Fira Code', monospace;
+}
+
+.nav-link {
+    color: var(--primary);
+    background-color: var(--bg-color);
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--on-primary);
+    background-color: var(--primary);
+}
+
+.nav {
+    background-color: var(--bg-color);
+}
+
+.btn {
+    border: solid 1px var(--btn-color);
+    background-color: transparent;
+    color: var(--btn-color);
+    font-size: 1rem;
+    padding: 0.1rem 0.5rem;
+    cursor: pointer;
+}
+
+.btn-small {
+    font-size: 0.8rem;
+    padding: 0 0.3rem;
+}
+
+.btn-large {
+    font-size: 1.2rem;
+    padding: 0.1rem 0.5rem;
+}
+
+.btn:hover {
+    background-color: var(--btn-hover-bg);
+    color: var(--btn-hover-color);
+}
+
+.btn:disabled {
+    color: var(--disabled);
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    --btn-color: var(--primary);
+    --btn-hover-bg: var(--primary);
+    --btn-hover-color: var(--on-primary);
+}
+
+.btn-info {
+    --btn-color: var(--information);
+    --btn-hover-bg: var(--information);
+    --btn-hover-color: var(--on-primary);
+}
+
+.btn-success {
+    --btn-color: var(--success);
+    --btn-hover-bg: var(--success);
+    --btn-hover-color: var(--on-primary);
+}
+
+.btn-warning {
+    --btn-color: var(--warning);
+    --btn-hover-bg: var(--warning);
+    --btn-hover-color: var(--on-primary);
+}
+
+.btn-danger {
+    --btn-color: var(--danger);
+    --btn-hover-bg: var(--danger);
+    --btn-hover-color: var(--on-primary);
+}
+
+.validation-message {
+    color: var(--danger);
+    font-size: 0.8rem;
+}
+
+input {
+    background-color: transparent;
+    color: var(--fg-color);
+    border: solid 1px var(--fg-color);
+}
+
+input.invalid.modified {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+input.valid.modified {
+    border-color: var(--success);
+    color: var(--success);
+}
+
+label:has(input.valid.modified)
+{
+    color: var(--success);
+}
+
+label:has(input.invalid.modified)
+{
+    color: var(--danger);
+}
+
+input.small, label.small {
+    font-size: 0.8rem;
+}
+
+input.large, label.large {
+    font-size: 1.2rem;
+}
+
+input.large {
+    border-width: 2px;
+}
+
+.error-message {
+    color: var(--danger);
+}

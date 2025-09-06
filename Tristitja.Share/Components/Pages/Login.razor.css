@@ -1,0 +1,56 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputs {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    width: 400px;
+}
+
+label {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+}
+
+label ::deep input {
+    flex: 1;
+}
+
+.controls {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+::deep form {
+    border: 1px solid var(--primary);
+}
+
+::deep form:has(input.invalid)
+{
+    border-color: var(--danger);
+}
+
+.form-content {
+    padding: 1rem 3rem;
+}
+
+.form-title {
+    color: var(--primary);
+    border-bottom: 1px solid var(--primary);
+}
+
+.form-title h2 {
+    padding: .5rem;
+    margin: 0;
+}

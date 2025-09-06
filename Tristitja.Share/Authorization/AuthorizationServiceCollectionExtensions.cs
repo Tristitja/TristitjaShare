@@ -15,7 +15,7 @@ public static class AuthorizationServiceCollectionExtensions
             services.AddScoped<IAuthorizationHandler, UserNotLoggedInHandler>();
             
             services
-                .AddSingleton<IAuthorizationMiddlewareResultHandler, RouteGuardAuthorizationMiddlewareResultHandler>();
+                .AddSingleton<IAuthorizationMiddlewareResultHandler, TristitjaAuthorizationMiddlewareResultHandler>();
 
             services.AddTransient<IPolicyEvaluator, CustomPolicyEvaluator>();
             

@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Components\UI\" />
       <Folder Include="wwwroot\lib\" />
     </ItemGroup>
 
@@ -29,7 +30,7 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-      <PackageReference Include="Tristitja.Auth.Local" Version="1.1.2" />
+      <PackageReference Include="Tristitja.Auth.Local" Version="1.2.1" />
       <PackageReference Include="Tristitja.Common" Version="1.0.0" />
     </ItemGroup>
 

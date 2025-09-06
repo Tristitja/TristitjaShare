@@ -30,6 +30,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateInitialUserRequest>()
 builder.Services.AddTristitjaAuthLocal<AppDbContext>();
 builder.Services.AddTristitjaShareAuthorization();
 
+builder.Services.AddCascadingAuthenticationState();
+
 builder.Services.AddScoped<CounterState>();
 
 var app = builder.Build();
@@ -42,11 +44,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForErrors: true);
 
-app.UseAntiforgery();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseAntiforgery();
 app.MapStaticAssets();
 
 app.MapAuthEndpoints();

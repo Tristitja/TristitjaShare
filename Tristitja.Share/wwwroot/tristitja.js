@@ -9,6 +9,9 @@ async function login(username, password)
         throw new Error("Pierdolnij się w łeb");
     }
     
+    const searchParams = new URLSearchParams(window.location.search);
+    const returnUrl = searchParams.get("ReturnUrl");
+    
     var req = { username, password };
     var res = await fetch("/loginexec", {
         method: 'POST',
@@ -20,8 +23,13 @@ async function login(username, password)
     
     if (res.ok)
     {
-        alert("Chuj");
-        location.reload(true);
+        if (returnUrl) {
+            location.href = returnUrl;
+        }
+        else {
+            location.reload(true);
+        }
+        
         return true; // Will not return XD But whatever
     }
     

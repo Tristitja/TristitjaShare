@@ -39,7 +39,7 @@ public static class AuthEndpointsIEndpointRouteBuilderExtension
 
                 await ctx.SignInAsync(claimsPrincipal);
                 ctx.Response.StatusCode = StatusCodes.Status204NoContent;
-            });
+            }).AllowAnonymous();
 
             endpoints.MapDelete("/logoutexec", async Task (ctx) =>
             {

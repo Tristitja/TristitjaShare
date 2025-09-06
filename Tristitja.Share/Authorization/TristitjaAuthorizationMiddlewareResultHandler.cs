@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization.Policy;
 
 namespace Tristitja.Share.Authorization;
 
-public class RouteGuardAuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResultHandler
+public class TristitjaAuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResultHandler
 {
     private readonly AuthorizationMiddlewareResultHandler _defaultHandler = new();
 

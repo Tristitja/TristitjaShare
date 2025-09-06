@@ -1,4 +1,6 @@
 ﻿@page "/"
+
+@using Microsoft.AspNetCore.Components.Authorization
 @rendermode InteractiveServer
 
 @inject IJSRuntime JsRuntime
@@ -13,7 +15,9 @@
     }
 </style>
 
-<button class="btn btn-warning btn-large" @onclick="Logout">Wyloguj się</button>
+<AuthorizeView>
+    <button class="btn btn-warning btn-large" @onclick="Logout">Wyloguj się</button>
+</AuthorizeView>
 
 <ul>
     <li>
@@ -53,7 +57,7 @@
 
 @code {
 
-    public async Task Logout(EventArgs args)
+    private async Task Logout(EventArgs args)
     {
         await JsRuntime.InvokeAsync<bool>("window.tristitja.logout", []);
     }
